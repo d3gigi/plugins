@@ -84,7 +84,7 @@ namespace Turbo.Plugins.Gigi
             if (s == null) return;
             var player = Hud.Game.Players;
             foreach(var p in player)
-                ShowPowerData(layer, 135238, "Disintegration", "XXXXXXXXXX", p);
+                ShowPowerData(layer, Hud.Sno.SnoPowers.BaneOfTheStrickenPrimary.Sno, "xxxxxxxxx", "XXXXXXXXXX", p);
         }
     }
  

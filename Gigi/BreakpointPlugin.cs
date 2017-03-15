@@ -46,7 +46,7 @@ namespace Turbo.Plugins.Gigi
             Table = new TopTable(Hud)
             {
                 RatioPositionX = 0.5f,
-                RatioPositionY = 0.2f,
+                RatioPositionY = 0.05f,
                 HorizontalCenter = true,
                 VerticalCenter = false,
                 PositionFromRight = false,
@@ -180,7 +180,7 @@ namespace Turbo.Plugins.Gigi
             var portraitRect = Hud.Game.Me.PortraitUiElement.Rectangle;
             foreach (var skill in Hud.Game.Me.Powers.UsedSkills)
                 DrawBreakpointsTable(skill); 
-		}
+	    }
     }
  
 }

@@ -1113,8 +1113,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.FlailOfTheAscended.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Fleshrake.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FlyingDragon.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Uptime
-                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // ICD
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3968109489)};        // Uptime
+                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3968109489)};        // ICD
             } 
 			if (pwr == Hud.Sno.SnoPowers.FortressBallista.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FragmentOfDestiny.Sno){} 
@@ -1191,8 +1191,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.NilfursBoast.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Oathkeeper.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.OculusRing.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Uptime
-                yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // ICD
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3563390301)};    // Uptime
+                yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3563390301)};     // ICD
             } 
 			if (pwr == Hud.Sno.SnoPowers.OdynSon.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.OdysseysEnd.Sno){} 
@@ -1312,8 +1312,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.XephirianAmulet.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ZoeysSecret.Sno){} 
             if (pwr == Hud.Sno.SnoPowers.BaneOfTheStrickenPrimary.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};     // ICD - not working
-                yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = true, ShowStacks = false};     // equipped
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3249948847)};     // ICD
+                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3249948847)};  // equipped - not needed
             }
         }
     }
