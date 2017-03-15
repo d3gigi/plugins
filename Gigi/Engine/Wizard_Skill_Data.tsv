@@ -32,3 +32,9 @@ Hud.Sno.SnoPowers.Wizard_Disintegrate	2	0	3.0	0.125	0	0	0	0	0	0	0
 Hud.Sno.SnoPowers.Wizard_Disintegrate	3	0	3.0	0.16667	0	0	0	0	0	0	0
 Hud.Sno.SnoPowers.Wizard_Disintegrate	4	0	3.0	0.11111	0	0	0	0	0	0	0
 Hud.Sno.SnoPowers.Wizard_Disintegrate	5	0	3.0	0.16667	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	0	16	1.0	1.0	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	1	16	1.0	1.0	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	2	16	1.0	0.77	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	3	16	1.0	0.33333	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	4	16	1.0	1.0	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_MagicMissile	5	16	1.0	0.5	0	180	15	0	0	0	0
