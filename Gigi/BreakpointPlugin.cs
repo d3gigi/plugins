@@ -98,6 +98,7 @@ namespace Turbo.Plugins.Gigi
                         RatioHeight = 22 / 1080f,
                         HighlightFunc = (pos, curPos) => pos == ShowHigher,
                         HighlightDecorator = HighlightCellDecorator,
+                        TextAlign = Default.HorizontalAlign.Center,
                     },
                     new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => GetCellText(line, column)),
                     new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => GetCellText(line, column)),
@@ -133,9 +134,7 @@ namespace Turbo.Plugins.Gigi
         }
 
         private int getStartingIndex(){
-            if (getCurrentBreakpointIndex()-(int)ShowHigher >= 0)
-                return getCurrentBreakpointIndex()-(int)ShowHigher;
-            return 0;
+            return getCurrentBreakpointIndex()-(int)ShowHigher; //okay if this returns negative!
         }
 
         private int getCurrentBreakpointIndex(){
