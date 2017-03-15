@@ -91,10 +91,6 @@ namespace Turbo.Plugins.Gigi
             uint lineCount = ShowLower + ShowHigher + 1;
             for(int i = 0; i < lineCount; i++)
             {
-                var r = 0;
-                var g = 125;
-                var b = 0;
-
                 Table.AddLine(
                     new TopTableHeader(Hud, (pos, curPos) =>  (pos == ShowHigher)?Hud.Game.Me.Offense.AttackSpeed.ToString(AttackSpeedDescriptor):"")
                     {
@@ -102,12 +98,6 @@ namespace Turbo.Plugins.Gigi
                         RatioHeight = 22 / 1080f,
                         HighlightFunc = (pos, curPos) => pos == ShowHigher,
                         HighlightDecorator = HighlightCellDecorator,
-                        CellHighlightDecorator = new TopTableCellDecorator(Hud)
-                        {
-                            BackgroundBrush = Hud.Render.CreateBrush(255, r, g, b, 0),
-                            BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
-                            TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, true, false, true),
-                        },
                     },
                     new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => GetCellText(line, column)),
                     new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => GetCellText(line, column)),
