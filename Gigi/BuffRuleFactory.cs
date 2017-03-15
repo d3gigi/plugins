@@ -1031,8 +1031,12 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 
             // ############ LEGENDARY POWERS ##############
             // ############################################
-			if (pwr == Hud.Sno.SnoPowers.AetherWalker.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.AhavarionSpearOfLycander.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.AetherWalker.Sno){
+                //nothing here
+            } 
+			if (pwr == Hud.Sno.SnoPowers.AhavarionSpearOfLycander.Sno){
+                //nothing here
+            } 
 			if (pwr == Hud.Sno.SnoPowers.AkkhansAddendum.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.AkkhansLeniency.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.AkkhansManacles.Sno){} 
@@ -1044,7 +1048,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.Arcstone.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ArmorOfTheKindRegent.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ArreatsLaw.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.ArthefsSparkOfLife.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.ArthefsSparkOfLife.Sno){
+                //nothing here
+            }
 			if (pwr == Hud.Sno.SnoPowers.AshnagarrsBloodBracer.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BakuliJungleWraps.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Balance.Sno){} 
@@ -1063,7 +1069,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.BladeOfTheTribes.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BladeOfTheWarlord.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BlessedOfHaull.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.BloodBrother.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.BloodBrother.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3304603929)};        // Uptime
+            } 
 			if (pwr == Hud.Sno.SnoPowers.BovineBardiche.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BracerOfFury.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BracersOfDestruction.Sno){} 
@@ -1095,7 +1103,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.DeadlyRebirth.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.DeathseersCowl.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.DeathWatchMantle.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.Deathwish.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.Deathwish.Sno){
+                //nothing here
+            } 
 			if (pwr == Hud.Sno.SnoPowers.DepthDiggers.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.DishonoredLegacy.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.DovuEnergyTrap.Sno){} 

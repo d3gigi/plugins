@@ -11,7 +11,7 @@ namespace Turbo.Plugins.Gigi
         
         public SelfBuffPlugin()
         {
-            Enabled = false;
+            Enabled = true;
         }
 
  
@@ -40,9 +40,9 @@ namespace Turbo.Plugins.Gigi
                 }
             }
             
-            if(p.IsMe){
+            ISnoPower skill = Hud.Sno.GetSnoPower(sno);
+            if(p.IsMe && skill != null){
                 data += "\nSNOData:\n";
-                ISnoPower skill = Hud.Sno.GetSnoPower(sno);
                 data += skill.Sno.ToString() + "\t";
                 data += skill.NormalIconTextureId + "\t";
                 int i = 0;
@@ -84,7 +84,7 @@ namespace Turbo.Plugins.Gigi
             if (s == null) return;
             var player = Hud.Game.Players;
             foreach(var p in player)
-                ShowPowerData(layer, Hud.Sno.SnoPowers.BaneOfTheStrickenPrimary.Sno, "xxxxxxxxx", "XXXXXXXXXX", p);
+                ShowPowerData(layer, Hud.Game.Me.CubeSnoItem2.LegendaryPower.Sno, "xxxxxxxxx", "XXXXXXXXXX", p);
         }
     }
  
