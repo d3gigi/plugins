@@ -1,32 +1,16 @@
-HUD_SNO	rune_id	b_anim	s_coeff	proc_coeff	proc_coeff_2	dot_length	dot_fpt	dot_proc_coeff
-Hud.Sno.SnoPowers.Wizard_ArcaneOrb
-Hud.Sno.SnoPowers.Wizard_ArcaneTorrent
-Hud.Sno.SnoPowers.Wizard_Archon
-Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlast
-Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrike
-Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWave
-Hud.Sno.SnoPowers.Wizard_ArchonSlowTime
-Hud.Sno.SnoPowers.Wizard_ArchonTeleport
-Hud.Sno.SnoPowers.Wizard_BlackHole
-Hud.Sno.SnoPowers.Wizard_Blizzard
-Hud.Sno.SnoPowers.Wizard_DiamondSkin
-Hud.Sno.SnoPowers.Wizard_Disintegrate
-Hud.Sno.SnoPowers.Wizard_Electrocute
-Hud.Sno.SnoPowers.Wizard_EnergyArmor
-Hud.Sno.SnoPowers.Wizard_EnergyTwister
-Hud.Sno.SnoPowers.Wizard_ExplosiveBlast
-Hud.Sno.SnoPowers.Wizard_Familiar
-Hud.Sno.SnoPowers.Wizard_FrostNova
-Hud.Sno.SnoPowers.Wizard_Hydra
-Hud.Sno.SnoPowers.Wizard_IceArmor
-Hud.Sno.SnoPowers.Wizard_MagicMissile
-Hud.Sno.SnoPowers.Wizard_MagicWeapon
-Hud.Sno.SnoPowers.Wizard_Meteor
-Hud.Sno.SnoPowers.Wizard_MirrorImage
-Hud.Sno.SnoPowers.Wizard_RayOfFrost
-Hud.Sno.SnoPowers.Wizard_ShockPulse
-Hud.Sno.SnoPowers.Wizard_SlowTime
-Hud.Sno.SnoPowers.Wizard_SpectralBlade
-Hud.Sno.SnoPowers.Wizard_StormArmor
-Hud.Sno.SnoPowers.Wizard_Teleport
-Hud.Sno.SnoPowers.Wizard_WaveOfForce
+HUD_SNO	rune_id	b_anim	s_coeff	proc_coeff	proc_coeff_2	dot_length	dot_fpt	dot_proc_coeff	tick_length	tick_fpt	tick_proc_coeff
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	0	28	1.0	0.31	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	1	28	1.0	0.655	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	2	28	1.0	0.00925	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	3	28	1.0	0.1	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	4	28	1.0	0.067	0.003	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneOrb	5	28	1.0	0.067	0.013	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	0	0	3.0	0.2	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	1	0	3.0	0.2	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	2	0	3.0	0.6	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	3	0	1.5	0.5	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	4	0	3.0	0.2	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArcaneTorrent	5	0	3.0	0.16	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlast	0	0	1.0	0.25	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrike	0	25	1.0	0.5	0	0	0	0	0	0	0
+Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWave	0	0	3.0	0.1	0	0	0	0	0	0	0
