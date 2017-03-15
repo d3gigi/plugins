@@ -248,7 +248,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
             if (pwr == Hud.Sno.SnoPowers.Monk_ExplodingPalm.Sno){ 
                 //nothing here
 			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_FistsofThunder.Sno){ 
+            if (pwr == Hud.Sno.SnoPowers.Monk_FistsOfThunder.Sno){ 
                 //yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Third Hit) - not needed
 			}
             if (pwr == Hud.Sno.SnoPowers.Monk_InnerSanctuary.Sno){ 
@@ -334,6 +334,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			}
             // ############ MONK PASSIVE SKILLS ##############
             // ##############################################
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_Alacrity.Sno){ 
+                //nothing here
+			}
             if (pwr == Hud.Sno.SnoPowers.Monk_Passive_BeaconOfYtar.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
 			}
@@ -348,14 +351,15 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (WotHF Stack) 
                 yield return new BuffRule(pwr) { IconIndex = 4, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (CripplingWave Stack) 
 			}
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_Determination.Sno){ //determination?
+                yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = true};        // Passive (uptime) 
+            }   
             if (pwr == Hud.Sno.SnoPowers.Monk_Passive_ExaltedSoul.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
             } 
             if (pwr == Hud.Sno.SnoPowers.Monk_Passive_FleetFooted.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
-			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_GuidingLight.Sno){ //Alacrity
-                //nothing here
 			}
             if (pwr == Hud.Sno.SnoPowers.Monk_Passive_Harmony.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
@@ -373,10 +377,6 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (downtime) 
 			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_Provocation.Sno){ //determination?
-                yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = true};        // Passive (uptime) 
-            }   
             if (pwr == Hud.Sno.SnoPowers.Monk_Passive_RelentlessAssault.Sno){ 
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
 			}
@@ -631,7 +631,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_SummonZombieDog.Sno){
                 //nothing here
             }
-            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_WallOfZombies.Sno){//Wall of Death
+            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_WallOfDeath.Sno){//Wall of Death
                 //nothing here
             }
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_ZombieCharger.Sno){}//??
@@ -674,10 +674,6 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_MidnightFeast.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)            
 			}
-            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_PhysicalAttunement.Sno){ //Swampland
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)
-                //yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};       // Passive (Pets?) - not working 
-			}
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_PierceTheVeil.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)            
 			}
@@ -692,8 +688,12 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (cooldown)
 			}
+            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_SwamplandAttunement.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)
+                //yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};       // Passive (Pets?) - not working 
+			}
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_TraitZombieDogSpawner.Sno){} //?????
-            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_TribalRites.Sno){ //SummonZombieDogs
+            if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_TribalRites.Sno){
                 //nothing here - doesn't show ?
 			}
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_VisionQuest.Sno){ 
@@ -1070,7 +1070,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.BladeOfTheWarlord.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BlessedOfHaull.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BloodBrother.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3304603929)};        // Uptime
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Sword_2H_103_x1.Sno)};        // Uptime
             } 
 			if (pwr == Hud.Sno.SnoPowers.BovineBardiche.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.BracerOfFury.Sno){} 
@@ -1123,8 +1123,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.FlailOfTheAscended.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Fleshrake.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FlyingDragon.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3968109489)};        // Uptime
-                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3968109489)};        // ICD
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_CombatStaff_2H_009.Sno)};        // Uptime
+                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_CombatStaff_2H_009.Sno)};        // ICD
             } 
 			if (pwr == Hud.Sno.SnoPowers.FortressBallista.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FragmentOfDestiny.Sno){} 
@@ -1201,8 +1201,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.NilfursBoast.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Oathkeeper.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.OculusRing.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3563390301)};    // Uptime
-                yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3563390301)};     // ICD
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Ring_017.Sno)};    // Uptime
+                yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Ring_017.Sno)};     // ICD
             } 
 			if (pwr == Hud.Sno.SnoPowers.OdynSon.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.OdysseysEnd.Sno){} 
@@ -1322,8 +1322,8 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.XephirianAmulet.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ZoeysSecret.Sno){} 
             if (pwr == Hud.Sno.SnoPowers.BaneOfTheStrickenPrimary.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3249948847)};     // ICD
-                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(3249948847)};  // equipped - not needed
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_018_x1.Sno)};     // ICD
+                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_018_x1.Sno)};  // equipped - not needed
             }
         }
     }
