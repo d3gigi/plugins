@@ -108,16 +108,10 @@ namespace Turbo.Plugins.Gigi
             }            
         }	
 
-
-		
         private Tuple<double, int, double> getBreakpointTuple(int idx){
             if (cbp == null || idx < 0 || idx >= cbp.Count())
                 return new Tuple<double, int, double>(0,0,0);     
             return cbp[idx];   
-        }
-
-        private string GetHeaderText(int pos, int curPos){
-            return string.Format("{0} {1}", pos, curPos);
         }
 
         private string GetCellText(int line, int column){
@@ -147,11 +141,9 @@ namespace Turbo.Plugins.Gigi
         private int getCurrentBreakpointIndex(){
             double aps = getRoundedAPS();
             int i;
-            for(i = 0; i < cbp.Count(); ){
+            for(i = 0; i < cbp.Count(); i++)
                 if (aps >= cbp[i].Item1 && aps <= cbp[i].Item3)
                     return i;
-                i += 1;
-            }
             return i;
         }
 
@@ -164,14 +156,13 @@ namespace Turbo.Plugins.Gigi
         public void DrawBreakpointsTable(IPlayerSkill skill){
             var ui = Hud.Render.GetPlayerSkillUiElement(skill.Key);
             var rect = new RectangleF((float)Math.Round(ui.Rectangle.X) + 0.5f, (float)Math.Round(ui.Rectangle.Y) + 0.5f, (float)Math.Round(ui.Rectangle.Width), (float)Math.Round(ui.Rectangle.Height));
-            if (Hud.Window.CursorInsideRect(rect.Left, rect.Top, rect.Width, rect.Height)){
+            if (Hud.Window.CursorInsideRect(rect.Left, rect.Top, rect.Width, rect.Height))
                 cbp = bpf.CreateBreakpointTable(skill.SnoPower);
-            }
             else
                 return;
-            if (cbp != null){
+
+            if (cbp != null)
                 Table.Paint();
-            }
         }
 
         public void PaintTopInGame(ClipState clipState)
