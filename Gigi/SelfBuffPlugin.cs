@@ -84,7 +84,7 @@ namespace Turbo.Plugins.Gigi
             if (s == null) return;
             var player = Hud.Game.Players;
             foreach(var p in player)
-                ShowPowerData(layer, Hud.Sno.SnoPowers.Monk_MysticAlly.Sno, "Avala", "XXXXXXXXXX", p);
+                ShowPowerData(layer, 135238, "Disintegration", "XXXXXXXXXX", p);
         }
     }
  

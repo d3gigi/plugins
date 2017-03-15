@@ -1,4 +1,5 @@
 using System;
+using SharpDX;
 using System.Linq;
 using System.Collections.Generic;
 using Turbo.Plugins.Default;
@@ -13,12 +14,12 @@ namespace Turbo.Plugins.Gigi
         public TopTable Table { get; set; }
         private List<Tuple<double, int, double>> cbp;
         private float _baseweapon = 1.61f; 
-
         public TopTableCellDecorator DefaultCellDecorator { get; set; }
         public TopTableCellDecorator HighlightCellDecorator { get; set; }
-
         public int ShowLower = 5;
         public int ShowHigher = 5;
+        public string AttackSpeedDescriptor = "0.0000";
+        public string PercentDescriptor = "0.00";
 
         public BreakpointPlugin()
         {
@@ -29,8 +30,6 @@ namespace Turbo.Plugins.Gigi
         {
             base.Load(hud);
             bpf = new BreakpointFactory(hud);
-            cbp = bpf.CreateBreakpointTable(25, 1.0f);
-
             DefaultCellDecorator = new TopTableCellDecorator(Hud)
             {
                 BackgroundBrush = Hud.Render.CreateBrush(120, 75, 75, 75, 0),
@@ -47,7 +46,7 @@ namespace Turbo.Plugins.Gigi
             Table = new TopTable(Hud)
             {
                 RatioPositionX = 0.5f,
-                RatioPositionY = 0.01f,
+                RatioPositionY = 0.2f,
                 HorizontalCenter = true,
                 VerticalCenter = false,
                 PositionFromRight = false,
@@ -61,7 +60,7 @@ namespace Turbo.Plugins.Gigi
                 {
                     //BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                     //BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, 1),
-                    TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 255, 255, 255, false, false, true),
+                    TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, false, false, true),
                 }
             };
 
@@ -70,7 +69,7 @@ namespace Turbo.Plugins.Gigi
                 {
                     RatioHeight = 22 / 1080f, // define only once on first column, value on others will be ignored
                     RatioWidth = 75 / 1080f,
-                    TextFunc = () => "FPA",
+                    TextFunc = () => "FPA at (" + bpf.getBaseAnimationLength() + ", " + bpf.getSpeedCoefficient() +")",
                 },
                 new TopTableHeader(Hud)
                 {
@@ -92,9 +91,9 @@ namespace Turbo.Plugins.Gigi
                     RatioWidth = 75 / 1080f,
                     TextFunc = () => "\u0394 FPA-DPS",
                 }
-            );                   
+            );
 
-            makeTable();
+            makeTable();                   
         }	
 		
         private Tuple<double, int, double> getBreakpointTuple(int idx){
@@ -119,61 +118,68 @@ namespace Turbo.Plugins.Gigi
             val = Math.Round(val * 10000)/10000;
             return val;
         }
+        
         private void makeTable(){
-            for(int i = 0; i < cbp.Count(); i++)
+            int sidx = 0;
+            int eidx = 120;
+            if (ShowHigher > 0)
+                sidx = -1 * ShowHigher;
+            if (ShowLower >= 0)
+                eidx = ShowLower;
+            for(int i = sidx; i <= eidx; i++)
                 createLine(i);
         }
 
         private void createLine(int i){       
-            string desc = "0.0000";
             Table.AddLine(                    
                 new TopTableHeader(Hud){
                     RatioHeight = 20 / 1080f,
-                    TextFunc = () => ((i==getCurrentBreakpointIndex())?Hud.Game.Me.Offense.AttackSpeed.ToString("0.0000"):string.Empty),
-                    CellDecorator = ((i==getCurrentBreakpointIndex())?HighlightCellDecorator:DefaultCellDecorator),
+                    TextFunc = () => ((i==0)?Hud.Game.Me.Offense.AttackSpeed.ToString(AttackSpeedDescriptor):string.Empty),
+                    CellDecorator = ((i==0)?HighlightCellDecorator:DefaultCellDecorator),
                 },
                 new TopTableCell(Hud)
                 {
-                    TextFunc = () => getBreakpointTuple(i).Item2.ToString(),
+                    TextFunc = () => getBreakpointTuple(getCurrentBreakpointIndex()+i).Item2.ToString(),
                 },
                 new TopTableCell(Hud)
                 {
-                    TextFunc = () => getBreakpointTuple(i).Item1.ToString(desc),
+                    TextFunc = () => getBreakpointTuple(getCurrentBreakpointIndex()+i).Item1.ToString(AttackSpeedDescriptor),
                 },
                 new TopTableCell(Hud)
                 {
-                    TextFunc = () => getBreakpointTuple(i).Item3.ToString(desc),
+                    TextFunc = () => getBreakpointTuple(getCurrentBreakpointIndex()+i).Item3.ToString(AttackSpeedDescriptor),
                 },
                 new TopTableCell(Hud)
                 {
-                    TextFunc = () => (100*(getBreakpointTuple(i).Item1-Hud.Game.Me.Offense.AttackSpeed)/_baseweapon).ToString("0.00")+" %",
+                    TextFunc = () => (100*(getBreakpointTuple(getCurrentBreakpointIndex()+i).Item1-Hud.Game.Me.Offense.AttackSpeed)/_baseweapon).ToString(PercentDescriptor)+" %",
                 },
                 new TopTableCell(Hud)
                 {
-                    TextFunc = () => ((100.0f*getBreakpointTuple(getCurrentBreakpointIndex()).Item2)/(getBreakpointTuple(i).Item2)-100).ToString("0.00")+" %",
+                    TextFunc = () => ((100.0f*getBreakpointTuple(getCurrentBreakpointIndex()).Item2)/(getBreakpointTuple(getCurrentBreakpointIndex()+i).Item2)-100).ToString(PercentDescriptor)+" %",
                 }
             );    
+        }
+        
+        public void DrawBreakpointsTable(IPlayerSkill skill){
+            var ui = Hud.Render.GetPlayerSkillUiElement(skill.Key);
+            var rect = new RectangleF((float)Math.Round(ui.Rectangle.X) + 0.5f, (float)Math.Round(ui.Rectangle.Y) + 0.5f, (float)Math.Round(ui.Rectangle.Width), (float)Math.Round(ui.Rectangle.Height));
+            if (Hud.Window.CursorInsideRect(rect.Left, rect.Top, rect.Width, rect.Height)){
+                cbp = bpf.CreateBreakpointTable(skill.SnoPower);
+            }
+            //else
+            //    return;
+            if (cbp != null){
+                Table.Paint();
+            }
         }
 
         public void PaintTopInGame(ClipState clipState)
         {
             if (clipState != ClipState.BeforeClip) return;
-            Table.Paint();
-
-            /*
-            var size = 55f / 1200.0f * Hud.Window.Size.Height * Ratio;
 
             var portraitRect = Hud.Game.Me.PortraitUiElement.Rectangle;
             foreach (var skill in Hud.Game.Me.Powers.UsedSkills)
-            {
-                var index = skill.Key <= ActionKey.RightSkill ? (int)skill.Key + 4 : (int)skill.Key - 2;
-                var x = portraitRect.Right + size * index;
-                var y = portraitRect.Top + portraitRect.Height * 0.21f;
-                var rect = new RectangleF(x, y, size, size);
-                if (Hud.Window.CursorInsideRect(rect.Left, rect.Top, rect.Width, rect.Height))
-                    DrawBreakpointsTable(skill);            
-            }
-            */
+                DrawBreakpointsTable(skill); 
 		}
     }
  
