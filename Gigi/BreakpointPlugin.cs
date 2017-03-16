@@ -47,7 +47,7 @@ namespace Turbo.Plugins.Gigi
             Table = new TopTable(Hud)
             {
                 RatioPositionX = 0.5f,
-                RatioPositionY = 0.35f,
+                RatioPositionY = 0.1f,
                 HorizontalCenter = true,
                 VerticalCenter = false,
                 PositionFromRight = false,

@@ -42,7 +42,7 @@ namespace Turbo.Plugins.Gigi.Engine
         public float getSpeedCoefficient(){
             return _s_coeff;
         }
-
+        
         private List<Tuple<double, int, double>> CreateBreakpointTable(int b_anim, float s_coeff=1.0f){
             List<Tuple<double, int, double>> res = new List<Tuple<double, int, double>>();
             for (int i = _minframe; i <= _maxframe; i++){
