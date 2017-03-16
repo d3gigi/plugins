@@ -68,7 +68,7 @@ namespace Turbo.Plugins.Gigi
         }
 
         private void DrawTexture(uint tid, RectangleF r){
-            ITexture t = Hud.Texture.GetTexture(4211424253);
+            ITexture t = Hud.Texture.GetTexture(tid);
             if (t == null) return;
             t.Draw(r, 1.0f);
 
@@ -79,12 +79,12 @@ namespace Turbo.Plugins.Gigi
             var pets = Hud.Game.Actors.Where(x => x.SummonerAcdDynamicId == Hud.Game.Me.SummonerId);
             foreach(var p in pets)
                 PlayerDecorator.Paint(layer, p, p.FloorCoordinate, "Pet");
-                    */
+            */
             var s = Hud.Game.Me.Powers.UsedSkills.First();
             if (s == null) return;
             var player = Hud.Game.Players;
             foreach(var p in player)
-                ShowPowerData(layer, Hud.Game.Me.CubeSnoItem2.LegendaryPower.Sno, "xxxxxxxxx", "XXXXXXXXXX", p);
+                ShowPowerData(layer, Hud.Game.Me.CubeSnoItem3.LegendaryPower.Sno, "XXXXXXXXXXXXXX", "XXXXXXXXXX", p);
         }
     }
  

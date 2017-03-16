@@ -36,20 +36,59 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Swami (Stacks)
                 //yield return new BuffRule(134872) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};   // Swami (Active) - works is however bugged (continues even when swami is debuffed manually)
 			}
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlast.Sno){}
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrike.Sno){}            
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlast.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlastCold.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlastFire.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneBlastLightning.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrike.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrikeCold.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrikeFire.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonArcaneStrikeLightning.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonCancel.Sno){
+                //nothing here
+            }
             if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWave.Sno){ // if you use Vyr and Max Arcane (= all_elements==0) the game will jump between the three Arcane Runes (IconIndex 0, 3, 1) for Channeling Disintregration Wave       
                 //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Arcane Wave (No Rune, No Vyr), (Vyr, Max Arcane) - not needed
                 yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Arcane Wave (No Rune, No Vyr), (Rune 2, No Vyr), (Rune 5, No Vyr), (Vyr, Max Arcane)
                 //yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Arcane Wave (Rune 2, No Vyr), (Vyr, Max Arcane) - not needed
                 //yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Arcane Wave (Rune 5, No Vyr), (Vyr, Max Arcane) - not needed
 			}
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveCold.Sno){
+                //yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Cold Wave (Rune 4, No Vyr), (Vyr, Max Cold) - not needed
+                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Cold Wave (Rune 4, No Vyr), (Vyr, Max Cold)  
+			}      
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveFire.Sno){
+                //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Fire Wave (Rune 1, No Vyr), (Vyr, Max Fire) - not needed
+                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Fire Wave (Rune 1, No Vyr), (Vyr, Max Fire)
+			}
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveLightning.Sno){
+                //yield return new BuffRule(pwr) { IconIndex = 4, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Lightning Wave (Rune 3, No Vyr), (Vyr, Max Light) - not needed
+                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Lightning Wave (Rune 3, No Vyr), (Vyr, Max Light)
+			}
             if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonSlowTime.Sno){                    
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Slow Time (Effect 1) (Rune 3, Vyr)
                 //yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Slow Time (Effect 2) (Rune 3, Vyr) - not needed
                 //yield return new BuffRule(pwr) { IconIndex = 10, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Slow Time (Effect 3) (Rune 3, Vyr) - not needed
 			}
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonTeleport.Sno){}
+            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonTeleport.Sno){
+                //nothing here
+            }
             if (pwr == Hud.Sno.SnoPowers.Wizard_BlackHole.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 8, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Black Hole (Rune 2)
                 yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Black Hole (Rune 5)
@@ -205,7 +244,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)
 			}
             if (pwr == Hud.Sno.SnoPowers.Wizard_Passive_UnstableAnomaly.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Wizard_Passive_UnstableAnomaly (Active)
+                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Wizard_Passive_UnstableAnomaly (Active)
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Wizard_Passive_UnstableAnomaly (Cooldown)
 			}
             if (pwr == Hud.Sno.SnoPowers.Wizard_Passive_UnwaveringWill.Sno){
@@ -259,15 +298,21 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
             if (pwr == Hud.Sno.SnoPowers.Monk_LashingTailKick.Sno){ 
                 //nothing here
 			}
-            //###### THESE ARE THE PASSIVE_V2 EFFECTS - WAITING FOR KJ TO UPDATE SNOCONTROLLER ########
-            /* 
-            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfConviction.Sno){ 
+            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfConviction.Sno){
+                foreach(BuffRule b in CreateBuffRules(Hud.Sno.SnoPowers.Monk_Passive_MantraOfConvictionV2.Sno))
+                    yield return b;
+            }
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_MantraOfConvictionV2.Sno){ 
                 //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Equipped) - not needed
                 yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Active)
                 //yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 
                 //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5
 			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfHealing.Sno){ 
+            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfHealing.Sno){
+                foreach(BuffRule b in CreateBuffRules(Hud.Sno.SnoPowers.Monk_Passive_MantraOfHealingV2.Sno))
+                    yield return b;
+            }
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_MantraOfHealingV2.Sno){ 
                 //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Base Effect)
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Active)
                 //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5
@@ -278,7 +323,11 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 //yield return new BuffRule(pwr) { IconIndex = 14, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 4
                 //yield return new BuffRule(pwr) { IconIndex = 15, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 5
 			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfRetribution.Sno){ 
+            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfRetribution.Sno){
+                foreach(BuffRule b in CreateBuffRules(Hud.Sno.SnoPowers.Monk_Passive_MantraOfRetributionV2.Sno))
+                    yield return b;
+            }
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_MantraOfRetributionV2.Sno){ 
                 //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Base Effect)
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Active)
                 //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5
@@ -289,7 +338,11 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 //yield return new BuffRule(pwr) { IconIndex = 14, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 2
                 //yield return new BuffRule(pwr) { IconIndex = 15, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 5
 			}
-            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfSalvation.Sno){ 
+            if (pwr == Hud.Sno.SnoPowers.Monk_MantraOfSalvation.Sno){
+                foreach(BuffRule b in CreateBuffRules(Hud.Sno.SnoPowers.Monk_Passive_MantraOfEvasionV2.Sno))
+                    yield return b;
+            }
+            if (pwr == Hud.Sno.SnoPowers.Monk_Passive_MantraOfEvasionV2.Sno){ 
                 //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Base Effect)
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5 (Active)
                 //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};     // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4, Rune 5
@@ -301,7 +354,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 //yield return new BuffRule(pwr) { IconIndex = 14, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 3
                 //yield return new BuffRule(pwr) { IconIndex = 15, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};    // Rune 2
 			}
-            */
+     
             if (pwr == Hud.Sno.SnoPowers.Monk_MysticAlly.Sno){
                 //yield return new BuffRule(362118) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};  // Rune 0, Rune 1, Rune 2, Rune 3, Rune 4 (Ally)
                 //yield return new BuffRule(362118) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};   // Rune 4 (on sacrifice) (Ally)
@@ -1014,23 +1067,11 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
             if (pwr == Hud.Sno.SnoPowers.DemonHunter_Passive_ThrillOfTheHunt.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Passive (equipped)
             } 
-            /*
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveFire.Sno){
-                //yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Fire Wave (Rune 1, No Vyr), (Vyr, Max Fire) - not needed
-                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Fire Wave (Rune 1, No Vyr), (Vyr, Max Fire)
-			}
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveLightning.Sno){
-                //yield return new BuffRule(pwr) { IconIndex = 4, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Lightning Wave (Rune 3, No Vyr), (Vyr, Max Light) - not needed
-                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Lightning Wave (Rune 3, No Vyr), (Vyr, Max Light)
-			}
-            if (pwr == Hud.Sno.SnoPowers.Wizard_ArchonDisintegrationWaveCold.Sno){
-                //yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};      // Cold Wave (Rune 4, No Vyr), (Vyr, Max Cold) - not needed
-                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Cold Wave (Rune 4, No Vyr), (Vyr, Max Cold)  
-			}
-            */
 
-            // ############ LEGENDARY POWERS ##############
-            // ############################################
+
+            // ask for a request to add your item here: http://turbohud.freeforums.net/thread/4045/v7-1-english-gigi-partybuffplugin
+            // ############ LEGENDARY ITEM POWERS ############## 
+            // #################################################
 			if (pwr == Hud.Sno.SnoPowers.AetherWalker.Sno){
                 //nothing here
             } 
@@ -1043,7 +1084,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.AncestorsGrace.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.AncientParthanDefenders.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.AnessaziEdge.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.AquilaCuirass.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.AquilaCuirass.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};        // Active
+            } 
 			if (pwr == Hud.Sno.SnoPowers.ArchmagesVicalyke.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Arcstone.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ArmorOfTheKindRegent.Sno){} 
@@ -1154,11 +1197,15 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.HergbrashsBinding.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.HexingPantsOfMrYan.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.HillenbrandsTrainingSword.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.HomingPads.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.HomingPads.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Shoulder_001_x1.Sno)};        // Active
+            } 
 			if (pwr == Hud.Sno.SnoPowers.HuntersWrath.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.HwojWrap.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.IncenseTorchOfTheGrandTemple.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.Ingeom.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.Ingeom.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Uptime
+            } 
 			if (pwr == Hud.Sno.SnoPowers.InviolableFaith.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.IrontoeMudsputters.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.JacesHammerOfVigilance.Sno){} 
@@ -1173,7 +1220,10 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.KhassettsCordOfRighteousness.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.KmarTenclip.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.KredesFlame.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.KrelmsBuffBelt.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.KrelmsBuffBelt.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Belt_Set_02_x1.Sno)};         // Downtime
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Belt_Set_02_x1.Sno)};        // Active
+            } 
 			if (pwr == Hud.Sno.SnoPowers.KrelmsBuffBracers.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Kridershot.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.KyoshirosBlade.Sno){} 
@@ -1191,8 +1241,12 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.Madstone.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Magefist.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.MalothsFocus.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.ManaldHeal.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.MantleOfChanneling.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.ManaldHeal.Sno){
+                //nothing here
+            } 
+			if (pwr == Hud.Sno.SnoPowers.MantleOfChanneling.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.P4_Unique_Shoulder_103.Sno)};         // Active
+            } 
 			if (pwr == Hud.Sno.SnoPowers.MarasKaleidoscope.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.MaskOfJeram.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.MoonlightWard.Sno){} 
@@ -1216,7 +1270,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.Quetzalcoatl.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.RabidStrike.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.RakoffsGlassOfLife.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.RanslorsFolly.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.RanslorsFolly.Sno){
+                //nothing here
+            } 
 			if (pwr == Hud.Sno.SnoPowers.RazorStrop.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.RechelsRingOfLarceny.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.RelicOfAkarat.Sno){} 
@@ -1253,7 +1309,9 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.StaffOfChiroptera.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.StalgardsDecimator.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Standoff.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.StArchewsGage.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.StArchewsGage.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gloves_101_p2.Sno)};         // Uptime
+            } 
 			if (pwr == Hud.Sno.SnoPowers.Starfire.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.StarmetalKukri.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.StormCrow.Sno){} 
@@ -1314,17 +1372,142 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.WandOfWoh.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.WarhelmOfKassar.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.WarstaffOfGeneralQuang.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.WarzechianArmguards.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.WarzechianArmguards.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Bracer_101_x1.Sno)};         // Uptime
+            } 
 			if (pwr == Hud.Sno.SnoPowers.Wizardspike.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.WojahnniAssaulter.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.WrapsOfClarity.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Wyrdward.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.XephirianAmulet.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.ZoeysSecret.Sno){} 
+
+
+
+            // ############ LEGENDARY GEM POWERS ##############
+            // ################################################
+            if (pwr == Hud.Sno.SnoPowers.BaneOfThePowerfulPrimary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; 
+            }
+            if (pwr == Hud.Sno.SnoPowers.BaneOfThePowerfulSecondary.Sno){
+                //nothing here
+            } 
             if (pwr == Hud.Sno.SnoPowers.BaneOfTheStrickenPrimary.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_018_x1.Sno)};     // ICD
-                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_018_x1.Sno)};  // equipped - not needed
+                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_018_x1.Sno)};  // Equipped - not needed
             }
+            if (pwr == Hud.Sno.SnoPowers.BaneOfTheStrickenSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.BaneOfTheTrappedPrimary.Sno){
+                //nothingh ere
+            } 
+            if (pwr == Hud.Sno.SnoPowers.BaneOfTheTrappedSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.BoonOfTheHoarderPrimary.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.BoonOfTheHoarderSecondary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_014_x1.Sno)};     // Active
+            }  
+            if (pwr == Hud.Sno.SnoPowers.BoyarskysChipPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.BoyarskysChipSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.EnforcerPrimary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.EnforcerSecondary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.EsotericAlterationPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.EsotericAlterationSecondary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_016_x1.Sno)};    
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GemOfEasePrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GemOfEaseSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GemOfEfficaciousToxinPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GemOfEfficaciousToxinSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GogokOfSwiftnessPrimary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true}; 
+                //yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false,  UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_008_x1.Sno)}; - not needed 
+                //yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false,  UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_008_x1.Sno)}; - not needed
+                //yield return new BuffRule(pwr) { IconIndex = 4, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false,  UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_008_x1.Sno)}; - not needed
+            } 
+            if (pwr == Hud.Sno.SnoPowers.GogokOfSwiftnessSecondary.Sno){
+                //nothing here
+           } 
+            if (pwr == Hud.Sno.SnoPowers.IceblinkPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.IceblinkSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.InvigoratingGemstonePrimary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.InvigoratingGemstoneSecondary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.MirinaeTeardropOfTheStarweaverPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MirinaeTeardropOfTheStarweaverSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MoltenWildebeestsGizzardPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MoltenWildebeestsGizzardSecondary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_017_x1.Sno)};         // Downtime
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_017_x1.Sno)};         // Shield is up
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MoratoriumPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MoratoriumSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MutilationGuardPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.MutilationGuardSecondary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_019_x1.Sno)};        // Active
+            } 
+            if (pwr == Hud.Sno.SnoPowers.PainEnhancerPrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.PainEnhancerSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.RedSoulShardPrimary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.RedSoulShardSecondary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.SimplicitysStrengthPrimary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.SimplicitysStrengthSecondary.Sno){} 
+            if (pwr == Hud.Sno.SnoPowers.TaegukPrimary.Sno){                    
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Stacks
+                //yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_015_x1.Sno)};       // Channeling - not needed
+            } 
+            if (pwr == Hud.Sno.SnoPowers.TaegukSecondary.Sno){
+                //nothing here
+            }
+            if (pwr == Hud.Sno.SnoPowers.WreathOfLightningPrimary.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_Gem_004_x1.Sno)};         // Active
+            } 
+            if (pwr == Hud.Sno.SnoPowers.WreathOfLightningSecondary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.ZeisStoneOfVengeancePrimary.Sno){
+                //nothing here
+            } 
+            if (pwr == Hud.Sno.SnoPowers.ZeisStoneOfVengeanceSecondary.Sno){
+                //nothing here
+            } 
         }
     }
 }
