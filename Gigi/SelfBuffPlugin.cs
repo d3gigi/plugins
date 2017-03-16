@@ -87,5 +87,4 @@ namespace Turbo.Plugins.Gigi
                 ShowPowerData(layer, Hud.Game.Me.CubeSnoItem3.LegendaryPower.Sno, "XXXXXXXXXXXXXX", "XXXXXXXXXX", p);
         }
     }
- 
 }

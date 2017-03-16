@@ -1,22 +1,54 @@
-
 using System.Linq;
 using System.Collections.Generic;
 using Turbo.Plugins.Default;
 using Turbo.Plugins.Jack.Decorators.TopTables;
-using SharpDX.DirectInput;
 
 namespace Turbo.Plugins.Gigi
 {
  
-    public class RiftTrackerPlugin : BasePlugin, IInGameTopPainter, IMonsterKilledHandler
+    public class RiftTrackerPlugin : BasePlugin, IInGameTopPainter, IMonsterKilledHandler, INewAreaHandler
     {
-		public IFont TextFont { get; set; }
-        private List<uint> MonsterTracked = new List<uint>();
-		private Dictionary<string, float> MonsterProgression = new Dictionary<string, float>();
-		private Dictionary<string, int> MonsterSeenCount = new Dictionary<string, int>();
-		private Dictionary<string, int> MonsterKilledCount = new Dictionary<string ,int>();
+        private Dictionary<string, HashSet<uint>> MonsterTracked = new Dictionary<string, HashSet<uint>>();
+		private Dictionary<string, Dictionary<string, float>> MonsterProgression = new Dictionary<string, Dictionary<string, float>>();
+		private Dictionary<string, Dictionary<string, int>> MonsterSeenCount = new Dictionary<string, Dictionary<string, int>>();
+        private Dictionary<string, Dictionary<string, int>> MonsterSummonedCount = new Dictionary<string, Dictionary<string, int>>();
+		private Dictionary<string, Dictionary<string, int>> MonsterKilledCount = new Dictionary<string, Dictionary<string, int>>();
         public TopTable Table { get; set; }
-
+        private string currentFloor = "";
+        private HorizontalAlign align = Default.HorizontalAlign.Center;
+        //shameless copy from https://github.com/JackCeparou/JackCeparouCompass/blob/master/RiftInfoPlugin.cs
+        private IQuest riftQuest
+        {
+            get
+            {
+                return Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 337492) ?? // rift
+                       Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 382695);   // gr
+            }
+        }
+        public bool IsNephalemRift
+        {
+            get
+            {
+                return riftQuest != null && (riftQuest.QuestStepId == 1 || riftQuest.QuestStepId == 3 || riftQuest.QuestStepId == 10);
+            }
+        }
+        public bool IsGreaterRift
+        {
+            get
+            {
+                return riftQuest != null &&
+                       (riftQuest.QuestStepId == 13 || riftQuest.QuestStepId == 16 || riftQuest.QuestStepId == 34 ||
+                        riftQuest.QuestStepId == 46);
+            }
+        }        
+        private IUiElement uiProgressBar
+        {
+            get
+            {
+                return IsNephalemRift ? Hud.Render.NephalemRiftBarUiElement : Hud.Render.GreaterRiftBarUiElement;
+            }
+        }
+        //shameless copy end
         public RiftTrackerPlugin()
         {
             Enabled = false;
@@ -25,144 +57,257 @@ namespace Turbo.Plugins.Gigi
         public override void Load(IController hud)
         {
             base.Load(hud);
-			
+             // create the table with options
             Table = new TopTable(Hud)
             {
-                RatioPositionX = 0.85f,
-                RatioPositionY = 0.6f,
+                RatioPositionX = 0.2f,
+                RatioPositionY = 0.3f,
                 HorizontalCenter = true,
                 VerticalCenter = false,
                 PositionFromRight = false,
                 PositionFromBottom = false,
                 ShowHeaderLeft = true,
                 ShowHeaderTop = true,
-                ShowHeaderRight = false,
-                ShowHeaderBottom = false,
+                ShowHeaderRight = true,
+                ShowHeaderBottom = true,
                 DefaultCellDecorator = new TopTableCellDecorator(Hud)
                 {
-                    BackgroundBrush = Hud.Render.CreateBrush(120, 75, 75, 75, 0),
-                    BorderBrush = Hud.Render.CreateBrush(255, 175, 175, 175, -1),
-                    TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 255, 255, 255, false, false, true),
+                    BackgroundBrush = Hud.Render.CreateBrush(255, 0, 0, 0, 0),
+                    BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                    TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
+                },
+                DefaultHighlightDecorator = new TopTableCellDecorator(Hud)
+                {
+                    BackgroundBrush = Hud.Render.CreateBrush(255, 0, 0, 242, 0),
+                    BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                    TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
                 },
                 DefaultHeaderDecorator = new TopTableCellDecorator(Hud)
                 {
-                    //BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
-                    //BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, 1),
                     TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
                 }
             };
 
             Table.DefineColumns(
-                new TopTableHeader(Hud)
+                new TopTableHeader(Hud, (pos, curPos) => "Type")        //Monstertype
                 {
                     RatioHeight = 22 / 1080f, // define only once on first column, value on others will be ignored
-                    RatioWidth = 180 / 1080f,
-                    TextFunc = () => "Monstertype",
+                    RatioWidth = 108 / 1080f,
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
                 },
-                new TopTableHeader(Hud)
+                new TopTableHeader(Hud, (pos, curPos) => "% Single")    //Percent Progression of Monstertype
                 {
                     RatioWidth = 0.1f,
-                    TextFunc = () => "Prog Seen",
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
                 },
-                new TopTableHeader(Hud)
+                new TopTableHeader(Hud, (pos, curPos) => "% Tracked")   //Percent Progression of all Monstertype instances
                 {
                     RatioWidth = 0.1f,
-                    TextFunc = () => "Prog Killed",
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
+                },
+                new TopTableHeader(Hud, (pos, curPos) => "# Tracked")   //Count of all Monstertype instances
+                {
+                    RatioWidth = 0.1f,
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
+                },
+                new TopTableHeader(Hud, (pos, curPos) => "% Killed")    //Percent Progression off killed Monstertype instances
+                {
+                    RatioWidth = 0.1f,
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
+                },
+                new TopTableHeader(Hud, (pos, curPos) => "# Killed")    //Count of killed Monstertype instances
+                {
+                    RatioWidth = 0.1f,
+                    HighlightFunc = (pos, curPos) => false,
+                    TextAlign = align,
                 }
-            );
-
-			TextFont = Hud.Render.CreateFont("tahoma", 6.5f, 255, 255, 255, 255, false, false, true);
+            );            
         }		
+
+        public void OnNewArea(bool isNewGame, ISnoArea area){
+            if (!Hud.Game.IsInTown){
+                currentFloor = area.NameLocalized;
+                if (!MonsterProgression.ContainsKey(currentFloor) && 
+                    !MonsterSeenCount.ContainsKey(currentFloor) &&
+                    !MonsterSummonedCount.ContainsKey(currentFloor) &&
+                    !MonsterTracked.ContainsKey(currentFloor) &&
+                    !MonsterKilledCount.ContainsKey(currentFloor))
+                {
+                    //add floor in collection structures
+                    MonsterTracked.Add(currentFloor, new HashSet<uint>());
+                    MonsterProgression.Add(currentFloor, new Dictionary<string, float>());
+                    MonsterSeenCount.Add(currentFloor, new Dictionary<string, int>());
+                    MonsterKilledCount.Add(currentFloor, new Dictionary<string, int>());
+                    MonsterSummonedCount.Add(currentFloor, new Dictionary<string, int>());
+                    //Add an empty line in the table for a new area
+                    var cfloor = currentFloor.ToString(); //not sure if this is a "true copy" or still same reference
+                    Table.AddLine(
+                        new TopTableHeader(Hud, (pos, curPos) => cfloor)
+                        {
+                            RatioWidth = 62 / 1080f, // define only once on first line, value on other will be ignored
+                            RatioHeight = 22 / 1080f,
+                            HighlightFunc = (pos, curPos) => true, //highlight empty line for new area
+                            TextAlign = align,
+                            HighlightDecorator = new TopTableCellDecorator(Hud)
+                            {
+                                BackgroundBrush = Hud.Render.CreateBrush(255, 120, 120, 120, 0),
+                                BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
+                            },
+                            CellHighlightDecorator = new TopTableCellDecorator(Hud)
+                            {
+                                BackgroundBrush = Hud.Render.CreateBrush(255, 120, 120, 120, 0),
+                                BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
+                            },
+                        },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align }
+                    );         
+                }
+            }
+        }
 
 		public void OnMonsterKilled(IMonster monster){
 			if (monster.IsElite || monster.Rarity == ActorRarity.Boss){
 				//track killing data on elites/bosses here
 				return;
 			}
-			//track data on trash here
-			if (!MonsterKilledCount.ContainsKey(monster.SnoMonster.NameLocalized))
-				MonsterKilledCount.Add(monster.SnoMonster.NameLocalized, 1);
-			else
-				MonsterKilledCount[monster.SnoMonster.NameLocalized] += 1;
+            if (!MonsterKilledCount.ContainsKey(currentFloor))
+                return;
+            if (MonsterKilledCount[currentFloor].ContainsKey(monster.SnoMonster.NameLocalized))
+                MonsterKilledCount[currentFloor][monster.SnoMonster.NameLocalized] += 1;
+            else
+                MonsterKilledCount[currentFloor].Add(monster.SnoMonster.NameLocalized, 1);
 		}
 
 		private void ClearData(){
-			MonsterProgression.Clear();
-			MonsterSeenCount.Clear();
-			MonsterKilledCount.Clear();
-            MonsterTracked.Clear();
-		}
-
-		private void ProcessMonster(IMonster monster){
-			//do we already know that monster?
-            if (MonsterTracked.Contains(monster.AnnId))
-                return;
-            MonsterTracked.Add(monster.AnnId);
-
-            //track elite data here
-			if (monster.IsElite || monster.Rarity == ActorRarity.Boss){
-				return;
-			}
-
-			//track trash monster
-			if (!MonsterProgression.ContainsKey(monster.SnoMonster.NameLocalized)){
-				MonsterProgression.Add(monster.SnoMonster.NameLocalized, monster.SnoMonster.RiftProgression);
-                Table.AddLine(
-                    new TopTableHeader(Hud)
-                    {
-                        RatioWidth = 108 / 1080f, // define only once on first line, value on other will be ignored
-                        RatioHeight = 22 / 1080f,
-                        TextFunc = () => string.Empty,
-                    },
-                    new TopTableCell(Hud)
-                    {
-                        TextFunc = () => monster.SnoMonster.NameLocalized,
-                    },
-                    new TopTableCell(Hud)
-                    {
-                        TextFunc = () => getProgressionSeenForMonster(monster.SnoMonster.NameLocalized).ToString("0.00"),
-                    },
-                    new TopTableCell(Hud)
-                    {
-                        TextFunc = () => getProgressionKilledForMonster(monster.SnoMonster.NameLocalized).ToString("0.00"),
-                    }
-                );
+            if (MonsterProgression != null){
+                foreach(var m in MonsterProgression)
+                    if (m.Value != null)
+                        m.Value.Clear();
+                MonsterProgression.Clear();
             }
-			if (!MonsterSeenCount.ContainsKey(monster.SnoMonster.NameLocalized))
-				MonsterSeenCount.Add(monster.SnoMonster.NameLocalized, 1);
-			else
-				MonsterSeenCount[monster.SnoMonster.NameLocalized] += 1;
+            if (MonsterSeenCount != null){
+                foreach(var m in MonsterSeenCount)
+                    if (m.Value != null)
+                        m.Value.Clear();
+                MonsterSeenCount.Clear();
+            }
+            if (MonsterSummonedCount != null){
+                foreach(var m in MonsterSummonedCount)
+                    if (m.Value != null)
+                        m.Value.Clear();
+                MonsterSummonedCount.Clear();
+            }
+            if (MonsterKilledCount != null){
+                foreach(var m in MonsterKilledCount)
+                    if (m.Value != null)
+                        m.Value.Clear();
+                MonsterKilledCount.Clear();
+            }
+            if (MonsterTracked != null){
+                foreach(var m in MonsterTracked)
+                    if (m.Value != null)
+                        m.Value.Clear();
+            }
 		}
 
-        private double getProgressionSeenForMonster(string n){
-            if (MonsterProgression.ContainsKey(n) && MonsterSeenCount.ContainsKey(n))
-                return MonsterProgression[n] * MonsterSeenCount[n] * 100.0d / this.Hud.Game.MaxQuestProgress;
-            return 0f;
+        private void ProcessCollectedData(){
         }
 
-        private double getProgressionKilledForMonster(string n){
-            if (MonsterProgression.ContainsKey(n) && MonsterKilledCount.ContainsKey(n))
-                return MonsterProgression[n] * MonsterKilledCount[n] * 100.0d / this.Hud.Game.MaxQuestProgress;
-            return 0f;
+		private void ProcessMonster(IMonster m){
+            //make sure data accessing is safe (we probably don't need this - better be safe than sorry)
+            if (!MonsterProgression.ContainsKey(currentFloor) || 
+                !MonsterSeenCount.ContainsKey(currentFloor) ||
+                !MonsterSummonedCount.ContainsKey(currentFloor) ||
+                !MonsterTracked.ContainsKey(currentFloor))
+                return;
+
+            //don't track elites
+            if (m.IsElite || m.Rarity == ActorRarity.Boss){
+				//track data on elites/bosses here
+                return;
+            }
+
+			//do we already know that monster?
+            if (MonsterTracked[currentFloor].Contains(m.AnnId))
+                return;
+            MonsterTracked[currentFloor].Add(m.AnnId);
+
+            //is summoned?
+            if (m.SummonerAcdDynamicId == 0){ //not summoned
+                if (MonsterSeenCount[currentFloor].ContainsKey(m.SnoMonster.NameLocalized))
+                    MonsterSeenCount[currentFloor][m.SnoMonster.NameLocalized] += 1;
+                else
+                    MonsterSeenCount[currentFloor].Add(m.SnoMonster.NameLocalized, 1);
+            }else{ //summoned
+                if (MonsterSummonedCount[currentFloor].ContainsKey(m.SnoMonster.NameLocalized))
+                    MonsterSummonedCount[currentFloor][m.SnoMonster.NameLocalized] += 1;
+                else
+                    MonsterSummonedCount[currentFloor].Add(m.SnoMonster.NameLocalized, 1);
+            }
+            //add progression entry for monster
+            if (!MonsterProgression[currentFloor].ContainsKey(m.SnoActor.NameLocalized)){
+                MonsterProgression[currentFloor].Add(m.SnoMonster.NameLocalized, m.SnoMonster.RiftProgression);
+                //hmmm ... how do I map into the collected data... guess I need to ProcessData first and then Table.Paint() on the Results?
+                Table.AddLine(
+                    new TopTableHeader(Hud, (pos, curPos) => string.Empty)
+                    {
+                        RatioWidth = 62 / 1080f, // define only once on first line, value on other will be ignored
+                        RatioHeight = 22 / 1080f,
+                        HighlightFunc = (pos, curPos) => false,
+                        TextAlign = align,
+                        HighlightDecorator = new TopTableCellDecorator(Hud)
+                        {
+                            BackgroundBrush = Hud.Render.CreateBrush(255, 200, 200, 200, 0),
+                            BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                            TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
+                        },
+                        CellHighlightDecorator = new TopTableCellDecorator(Hud)
+                        {
+                            BackgroundBrush = Hud.Render.CreateBrush(255, 200, 200, 200, 0),
+                            BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                            TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
+                        },
+                    },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align },
+                    new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => string.Empty) { TextAlign = align }
+                );  
+            }
+		}
+
+        private string GetCellText(int line, int column){
+            return "";
         }
 
         public void PaintTopInGame(ClipState clipState)
         {
-            if (Hud.Game.Me.IsInTown) {
-                ClearData();
-                Table.Lines.Clear();
+            if (clipState != ClipState.BeforeClip) return;
+            if (Hud.Game.Me.IsInTown && (riftQuest.State == QuestState.completed || riftQuest.State == QuestState.none)){
+                //process data?
+                //Table.Paint()?
                 return;
             }
+            if (!IsNephalemRift && !IsGreaterRift) return;
+
 			//iterate trash monster data
             var monsters = Hud.Game.AliveMonsters.Where(m => !m.IsElite);
           	foreach (var monster in monsters)
 				ProcessMonster(monster);
-
-            if (clipState != ClipState.BeforeClip) return;
-            if (Table.Lines.Count() > 0 && Table.Columns.Count() > 0){
-                Table.Columns.Sort((x,y) => x.TextFunc().CompareTo(y.TextFunc()));
-                Table.Paint();
-            }
         }
  
     }
