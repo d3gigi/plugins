@@ -84,7 +84,7 @@ namespace Turbo.Plugins.Gigi
             if (s == null) return;
             var player = Hud.Game.Players;
             foreach(var p in player)
-                ShowPowerData(layer, Hud.Game.Me.CubeSnoItem3.LegendaryPower.Sno, "XXXXXXXXXXXXXX", "XXXXXXXXXX", p);
+                ShowPowerData(layer, Hud.Sno.SnoPowers.DemonHunter_Impale.Sno, "Inner", "XXXXXXXXXX", p);
         }
     }
 }

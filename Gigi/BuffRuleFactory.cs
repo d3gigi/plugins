@@ -581,7 +581,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped) 
 			}
             if (pwr == Hud.Sno.SnoPowers.Barbarian_Passive_PoundOfFlesh.Sno){
-                yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (equipped) 
+                //yield return new BuffRule(pwr) { IconIndex = 0, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false};        // Passive (equipped) 
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Stacks
 			}
             if (pwr == Hud.Sno.SnoPowers.Barbarian_Passive_Rampage.Sno){
@@ -1167,7 +1167,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.Fleshrake.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FlyingDragon.Sno){
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_CombatStaff_2H_009.Sno)};        // Uptime
-                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_CombatStaff_2H_009.Sno)};        // ICD
+                //yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false, UseLegendaryItemTexture = Hud.Inventory.GetSnoItem(Hud.Sno.SnoItems.Unique_CombatStaff_2H_009.Sno)};        // ICD
             } 
 			if (pwr == Hud.Sno.SnoPowers.FortressBallista.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.FragmentOfDestiny.Sno){} 
