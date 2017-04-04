@@ -199,7 +199,7 @@ namespace Turbo.Plugins.Gigi
             if (Tables != null){
                 foreach(var t in Tables){
                     if (t != null){
-                        t.RemoveLines();
+                        t.Reset();
                     }
                 }
                 Tables.Clear();
