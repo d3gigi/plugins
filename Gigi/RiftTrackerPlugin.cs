@@ -17,7 +17,7 @@ namespace Turbo.Plugins.Gigi
         public IKeyEvent tKey;
         private List<TopTable> Tables = new List<TopTable>();
         private string currentFloor = "";
-        private bool Show = false;
+        private bool Show = true;
         private bool tablesProcessed = false;
         private HorizontalAlign align = Default.HorizontalAlign.Center;
         //shameless copy from https://github.com/JackCeparou/JackCeparouCompass/blob/master/RiftInfoPlugin.cs
@@ -61,11 +61,11 @@ namespace Turbo.Plugins.Gigi
         public override void Load(IController hud)
         {
             base.Load(hud);
-            tKey = Hud.Input.CreateKeyEvent(true, Key.F5, false, false, false);
+            tKey = Hud.Input.CreateKeyEvent(true, Key.F7, false, false, false);
         }		
 
         public void OnNewArea(bool isNewGame, ISnoArea area){
-            if (string.IsNullOrEmpty(area.NameLocalized)) return;
+            if (string.IsNullOrEmpty(area.NameLocalized) || isNewGame) return;
             if (!Hud.Game.IsInTown){
                 currentFloor = area.NameLocalized;
                 if (!MonsterProgression.ContainsKey(currentFloor) && 
@@ -139,12 +139,12 @@ namespace Turbo.Plugins.Gigi
             }
 		}
 
-		private void ProcessMonster(IMonster m){
+		private void ProcessMonster(IMonster m, string floor){
             //make sure data accessing is safe (we probably don't need this - better be safe than sorry)
-            if (!MonsterProgression.ContainsKey(currentFloor) || 
-                !MonsterSeenCount.ContainsKey(currentFloor) ||
-                !MonsterSummonedCount.ContainsKey(currentFloor) ||
-                !MonsterTracked.ContainsKey(currentFloor))
+            if (!MonsterProgression.ContainsKey(floor) || 
+                !MonsterSeenCount.ContainsKey(floor) ||
+                !MonsterSummonedCount.ContainsKey(floor) ||
+                !MonsterTracked.ContainsKey(floor))
                 return;
 
             //don't track elites
@@ -154,26 +154,26 @@ namespace Turbo.Plugins.Gigi
             }
 
 			//do we already know that monster?
-            if (MonsterTracked[currentFloor].Contains(m.AnnId))
+            if (MonsterTracked[floor].Contains(m.AnnId))
                 return;
-            MonsterTracked[currentFloor].Add(m.AnnId);
+            MonsterTracked[floor].Add(m.AnnId);
 
             //is summoned?
             if (m.SummonerAcdDynamicId == 0){ //not summoned
-                if (MonsterSeenCount[currentFloor].ContainsKey(m.SnoMonster.NameLocalized))
-                    MonsterSeenCount[currentFloor][m.SnoMonster.NameLocalized] += 1;
+                if (MonsterSeenCount[floor].ContainsKey(m.SnoMonster.NameLocalized))
+                    MonsterSeenCount[floor][m.SnoMonster.NameLocalized] += 1;
                 else
-                    MonsterSeenCount[currentFloor].Add(m.SnoMonster.NameLocalized, 1);
+                    MonsterSeenCount[floor].Add(m.SnoMonster.NameLocalized, 1);
             }else{ //summoned
-                if (MonsterSummonedCount[currentFloor].ContainsKey(m.SnoMonster.NameLocalized))
-                    MonsterSummonedCount[currentFloor][m.SnoMonster.NameLocalized] += 1;
+                if (MonsterSummonedCount[floor].ContainsKey(m.SnoMonster.NameLocalized))
+                    MonsterSummonedCount[floor][m.SnoMonster.NameLocalized] += 1;
                 else
-                    MonsterSummonedCount[currentFloor].Add(m.SnoMonster.NameLocalized, 1);
+                    MonsterSummonedCount[floor].Add(m.SnoMonster.NameLocalized, 1);
             }
 
             //add progression entry for monster
-            if (!MonsterProgression[currentFloor].ContainsKey(m.SnoActor.NameLocalized)){
-                MonsterProgression[currentFloor].Add(m.SnoMonster.NameLocalized, 
+            if (!MonsterProgression[floor].ContainsKey(m.SnoMonster.NameLocalized)){
+                MonsterProgression[floor].Add(m.SnoMonster.NameLocalized, 
                 m.SnoMonster.RiftProgression);
             }
 		}
@@ -252,8 +252,8 @@ namespace Turbo.Plugins.Gigi
         }
 
         private void DrawTables(){
-            if (!tablesProcessed)
-                processTables();
+            //if (!tablesProcessed)
+            processTables();
             foreach(TopTable t in Tables)
                 t.Paint();
         }
@@ -264,7 +264,7 @@ namespace Turbo.Plugins.Gigi
             var h = Hud.Window.Size.Height;
             var xoff = w * 0.0133f;
             var XPos = xoff;
-            var YPos = h - h * 0.1f;
+            var YPos = h * 0.1f;
             //iterate floors where monsters are tracked for
             foreach(string f in MonsterTracked.Keys.ToList()){
                 if (!MonsterProgression.ContainsKey(f) || 
@@ -305,7 +305,8 @@ namespace Turbo.Plugins.Gigi
                         new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getKilledCount(f, m)) { TextAlign = align }
                     );
                 }//foreach-end monster iteration per floor
-                XPos += xoff;               
+                XPos += xoff;
+                Tables.Add(t);               
             }
             tablesProcessed = true;
         }
@@ -343,19 +344,23 @@ namespace Turbo.Plugins.Gigi
         {
             if (clipState != ClipState.BeforeClip) 
                 return;
-            if (Show && Hud.Game.Me.IsInTown && (riftQuest.State == QuestState.completed || riftQuest.State == QuestState.none)){
+            //if (Show && Hud.Game.Me.IsInTown && (riftQuest.State == QuestState.completed || riftQuest.State == QuestState.none)){
+           if (Show && Hud.Game.Me.IsInTown){
                 DrawTables();
                 return;
             }
         }
 
         public void AfterCollect(){
-            if (Hud.Game.SpecialArea != SpecialArea.Rift && Hud.Game.SpecialArea != SpecialArea.GreaterRift) 
+            if (Hud.Game.SpecialArea != SpecialArea.Rift && Hud.Game.SpecialArea != SpecialArea.GreaterRift){
+                //tablesProcessed = false;
                 return; //not in a rift
+            }
 
             var monsters = Hud.Game.AliveMonsters.Where(m => !m.IsElite);
+            var floor = currentFloor;
           	foreach (var monster in monsters)
-				ProcessMonster(monster);
+				ProcessMonster(monster, floor);
         }
  
     }
