@@ -718,7 +718,7 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
                 //yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};       // Passive (debuff?) - not needed
 			}
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_GruesomeFeast.Sno){ 
-                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 0, ShowTimeLeft = true, ShowStacks = true};         // Passive (equipped/stacks)
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = true};         // Passive (equipped/stacks)
 			}
             if (pwr == Hud.Sno.SnoPowers.WitchDoctor_Passive_JungleFortitude.Sno){ 
                 yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 0, ShowTimeLeft = false, ShowStacks = false};       // Passive (equipped)
