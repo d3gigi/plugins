@@ -14,6 +14,8 @@ namespace Turbo.Plugins.Gigi
 		private Dictionary<string, Dictionary<string, int>> MonsterSeenCount = new Dictionary<string, Dictionary<string, int>>();
         private Dictionary<string, Dictionary<string, int>> MonsterSummonedCount = new Dictionary<string, Dictionary<string, int>>();
 		private Dictionary<string, Dictionary<string, int>> MonsterKilledCount = new Dictionary<string, Dictionary<string, int>>();
+        public TopTableCellDecorator DefaultCellDecorator { get; set; }
+        public TopTableCellDecorator HighlightCellDecorator { get; set; }
         public IKeyEvent tKey;
         private List<TopTable> Tables = new List<TopTable>();
         private string currentFloor = "";
@@ -62,10 +64,21 @@ namespace Turbo.Plugins.Gigi
         {
             base.Load(hud);
             tKey = Hud.Input.CreateKeyEvent(true, Key.F7, false, false, false);
+            DefaultCellDecorator = new TopTableCellDecorator(Hud)
+            {
+                BackgroundBrush = Hud.Render.CreateBrush(185, 75, 75, 75, 0),
+                BorderBrush = Hud.Render.CreateBrush(175, 175, 175, 175, -1),
+                TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, false, false, true),
+            };
+            HighlightCellDecorator = new TopTableCellDecorator(Hud)
+            {
+                BackgroundBrush = Hud.Render.CreateBrush(185, 0, 175, 0, 0),
+                BorderBrush = Hud.Render.CreateBrush(175, 175, 175, 175, -1),
+                TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, false, false, true),
+            };
         }		
 
         public void OnNewArea(bool isNewGame, ISnoArea area){
-            if (string.IsNullOrEmpty(area.NameLocalized) || isNewGame) return;
             if (!Hud.Game.IsInTown){
                 currentFloor = area.NameLocalized;
                 if (!MonsterProgression.ContainsKey(currentFloor) && 
@@ -137,6 +150,15 @@ namespace Turbo.Plugins.Gigi
                     if (m.Value != null)
                         m.Value.Clear();
             }
+            if (Tables != null){
+                foreach(var t in Tables){
+                    if (t != null){
+                        t.Columns.Clear();
+                        t.Lines.Clear();
+                    }
+                }
+                Tables.Clear();
+            }
 		}
 
 		private void ProcessMonster(IMonster m, string floor){
@@ -178,72 +200,62 @@ namespace Turbo.Plugins.Gigi
             }
 		}
 
-        private TopTable getNewTable(float XPos, float YPos){
+        private TopTable getNewTable(float XPosRatio, float YPosRatio, string f){
             TopTable Table = new TopTable(Hud)
             {
-                RatioPositionX = 0.2f,
-                RatioPositionY = 0.3f,
+                RatioPositionX = XPosRatio,
+                RatioPositionY = YPosRatio,
                 HorizontalCenter = true,
                 VerticalCenter = false,
                 PositionFromRight = false,
                 PositionFromBottom = false,
-                ShowHeaderLeft = true,
+                ShowHeaderLeft = false,
                 ShowHeaderTop = true,
-                ShowHeaderRight = true,
-                ShowHeaderBottom = true,
-                DefaultCellDecorator = new TopTableCellDecorator(Hud)
-                {
-                    BackgroundBrush = Hud.Render.CreateBrush(255, 0, 0, 0, 0),
-                    BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
-                    TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
-                },
-                DefaultHighlightDecorator = new TopTableCellDecorator(Hud)
-                {
-                    BackgroundBrush = Hud.Render.CreateBrush(255, 0, 0, 242, 0),
-                    BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
-                    TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
-                },
+                ShowHeaderRight = false,
+                ShowHeaderBottom = false,
+                DefaultCellDecorator = DefaultCellDecorator,
+                DefaultHighlightDecorator = HighlightCellDecorator,
                 DefaultHeaderDecorator = new TopTableCellDecorator(Hud)
                 {
-                    TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, false, false, true),
+                    TextFont = Hud.Render.CreateFont("tahoma", 6.5f, 255, 255, 255, 255, false, false, true),
                 }
             };
 
             Table.DefineColumns(
-                new TopTableHeader(Hud, (pos, curPos) => "Type")        //Monstertype
+                new TopTableHeader(Hud, (pos, curPos) => "Type on " + f)        //Monstertype
                 {
-                    RatioHeight = 22 / Hud.Window.Size.Width, // define only once on first column, value on others will be ignored
-                    RatioWidth = 108 / Hud.Window.Size.Width,
+                    RatioHeight = 22 / 1080f, // define only once on first column, value on others will be ignored
+                    RatioWidth = 108 / 1080f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 },
-                new TopTableHeader(Hud, (pos, curPos) => "% Single")    //Percent Progression of Monstertype
+                new TopTableHeader(Hud, (pos, curPos) => "%S")    //Percent Progression of Monstertype
                 {
-                    RatioWidth = 0.1f,
+                    RatioWidth = 0.04f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 },
-                new TopTableHeader(Hud, (pos, curPos) => "% Tracked")   //Percent Progression of all Monstertype instances
+                new TopTableHeader(Hud, (pos, curPos) => "%T")   //Percent Progression of all Monstertype instances
                 {
-                    RatioWidth = 0.1f,
+                    RatioWidth = 0.05f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 },
-                new TopTableHeader(Hud, (pos, curPos) => "# Tracked")   //Count of all Monstertype instances
+                new TopTableHeader(Hud, (pos, curPos) => "#T")   //Count of all Monstertype instances
                 {
-                    RatioWidth = 0.1f,
+                    RatioWidth = 0.035f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 },
-                new TopTableHeader(Hud, (pos, curPos) => "% Killed")    //Percent Progression off killed Monstertype instances
+                new TopTableHeader(Hud, (pos, curPos) => "%K")    //Percent Progression off killed Monstertype instances
                 {
-                    RatioWidth = 0.1f,
+                    RatioWidth = 0.05f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 },
-                new TopTableHeader(Hud, (pos, curPos) => "# Killed")    //Count of killed Monstertype instances
+                new TopTableHeader(Hud, (pos, curPos) => "#K")    //Count of killed Monstertype instances
                 {
-                    RatioWidth = 0.1f,
+                    RatioWidth = 0.035f,
                     HighlightFunc = (pos, curPos) => false,
                     TextAlign = align,
                 }
@@ -252,8 +264,8 @@ namespace Turbo.Plugins.Gigi
         }
 
         private void DrawTables(){
-            //if (!tablesProcessed)
-            processTables();
+            if (!tablesProcessed)
+                processTables();
             foreach(TopTable t in Tables)
                 t.Paint();
         }
@@ -262,9 +274,11 @@ namespace Turbo.Plugins.Gigi
             //scaling and positining
             var w = Hud.Window.Size.Width;
             var h = Hud.Window.Size.Height;
-            var xoff = w * 0.0133f;
-            var XPos = xoff;
-            var YPos = h * 0.1f;
+            var xoff = 0.05f;
+            var yoff = 0.05f;
+            var XPosRatio = 0.1f;
+            var YPosRatio = 0.05f;
+            var count = 0;
             //iterate floors where monsters are tracked for
             foreach(string f in MonsterTracked.Keys.ToList()){
                 if (!MonsterProgression.ContainsKey(f) || 
@@ -273,50 +287,50 @@ namespace Turbo.Plugins.Gigi
                     !MonsterKilledCount.ContainsKey(f))
                     continue;
                 //create table for floor
-                TopTable t = getNewTable(XPos, YPos);
-                //fill table with each trackeed monster on floor
-                foreach(string m in MonsterTracked.Keys){
+                if (count == 5){
+                    XPosRatio = 0.1f;
+                    YPosRatio = 0.55f;
+                }
+                TopTable t = getNewTable(XPosRatio, YPosRatio, f);
+                //fill table with each tracked monster on floor
+                foreach(string m in MonsterProgression[f].Keys.ToList()){
                     string mtype = m.ToString();
+                    string floor = f.ToString();
                     t.AddLine(
-                        new TopTableHeader(Hud, (pos, curPos) => f)
+                        new TopTableHeader(Hud, (pos, curPos) => string.Empty)
                         {
-                            RatioWidth = 62 / w, // define only once on first line, value on other will be ignored
-                            RatioHeight = 22 / w,
-                            HighlightFunc = (pos, curPos) => true, //highlight empty line for new area
+                            RatioWidth = 62 / 1080f, // define only once on first line, value on other will be ignored
+                            RatioHeight = 22 / 1080f,
+                            HighlightFunc = (pos, curPos) => false, //highlight empty line for new area
                             TextAlign = align,
-                            HighlightDecorator = new TopTableCellDecorator(Hud)
-                            {
-                                BackgroundBrush = Hud.Render.CreateBrush(255, 120, 120, 120, 0),
-                                BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
-                                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
-                            },
-                            CellHighlightDecorator = new TopTableCellDecorator(Hud)
-                            {
-                                BackgroundBrush = Hud.Render.CreateBrush(255, 120, 120, 120, 0),
-                                BorderBrush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
-                                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 255, 255, true, false, true),
-                            },
                         },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => mtype) { TextAlign = align },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getSingleProgress(f, m)) { TextAlign = align },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getTrackedProgress(f, m)) { TextAlign = align },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getTrackedCount(f, m)) { TextAlign = align },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getKilledProgression(f, m)) { TextAlign = align },
-                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getKilledCount(f, m)) { TextAlign = align }
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => mtype),
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getSingleProgress(floor, mtype)),
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getTrackedProgress(floor, mtype)),
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getTrackedCount(floor, mtype)),
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getKilledProgression(floor, mtype)),
+                        new TopTableCell(Hud, (line, column, lineSorted, columnSorted) => getKilledCount(floor, mtype))
                     );
                 }//foreach-end monster iteration per floor
-                XPos += xoff;
-                Tables.Add(t);               
+                XPosRatio += 0.18f;
+                Tables.Add(t);
+                count++;               
             }
             tablesProcessed = true;
         }
 
         private string getSingleProgress(string f, string m){
+            if (!MonsterProgression.ContainsKey(f) || !MonsterProgression[f].ContainsKey(m)) return "-";
             double val = MonsterProgression[f][m] * 100.0 / this.Hud.Game.MaxQuestProgress;
             return val.ToString("0.00");
         }
 
         private string getTrackedProgress(string f, string m){
+            if (!MonsterProgression.ContainsKey(f) || 
+                !MonsterProgression[f].ContainsKey(m) ||
+                !MonsterSeenCount.ContainsKey(f) ||
+                !MonsterSummonedCount.ContainsKey(f)) 
+                return "-";
             double val = MonsterProgression[f][m] * 100.0 / this.Hud.Game.MaxQuestProgress;
             int summoned = MonsterSeenCount[f].ContainsKey(m) ? MonsterSeenCount[f][m] : 0 ;
             int seen = MonsterSummonedCount[f].ContainsKey(m) ? MonsterSummonedCount[f][m] : 0 ;
@@ -324,28 +338,34 @@ namespace Turbo.Plugins.Gigi
         }
 
         private string getTrackedCount(string f, string m){
+            if (!MonsterSeenCount.ContainsKey(f) ||
+                !MonsterSummonedCount.ContainsKey(f)) 
+                return "-";
             int summoned = MonsterSeenCount[f].ContainsKey(m) ? MonsterSeenCount[f][m] : 0 ;
             int seen = MonsterSummonedCount[f].ContainsKey(m) ? MonsterSummonedCount[f][m] : 0 ;
             return (seen+summoned).ToString();
         }
 
         private string getKilledProgression(string f, string m){
+            if (!MonsterProgression.ContainsKey(f) ||
+                !MonsterProgression[f].ContainsKey(m) ||
+                !MonsterKilledCount.ContainsKey(f)) 
+                return "-";
             double val = MonsterProgression[f][m] * 100.0 / this.Hud.Game.MaxQuestProgress;
             int killed = MonsterKilledCount[f].ContainsKey(m) ? MonsterKilledCount[f][m] : 0 ;
             return (val*killed).ToString("0.00");
         }
 
         private string getKilledCount(string f, string m){
+            if (!MonsterKilledCount.ContainsKey(f)) return "-";
             int killed = MonsterKilledCount[f].ContainsKey(m) ? MonsterKilledCount[f][m] : 0 ;
             return killed.ToString();
         }
 
         public void PaintTopInGame(ClipState clipState)
         {
-            if (clipState != ClipState.BeforeClip) 
-                return;
-            //if (Show && Hud.Game.Me.IsInTown && (riftQuest.State == QuestState.completed || riftQuest.State == QuestState.none)){
-           if (Show && Hud.Game.Me.IsInTown){
+            if (clipState != ClipState.BeforeClip) return;
+            if (Show && Hud.Game.Me.IsInTown && (riftQuest.State == QuestState.completed || riftQuest.State == QuestState.none)){
                 DrawTables();
                 return;
             }
@@ -353,14 +373,14 @@ namespace Turbo.Plugins.Gigi
 
         public void AfterCollect(){
             if (Hud.Game.SpecialArea != SpecialArea.Rift && Hud.Game.SpecialArea != SpecialArea.GreaterRift){
-                //tablesProcessed = false;
                 return; //not in a rift
             }
-
             var monsters = Hud.Game.AliveMonsters.Where(m => !m.IsElite);
             var floor = currentFloor;
           	foreach (var monster in monsters)
 				ProcessMonster(monster, floor);
+            tablesProcessed = false;
+            Show = true;
         }
  
     }
