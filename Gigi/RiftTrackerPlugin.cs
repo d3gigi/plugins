@@ -11,7 +11,7 @@ namespace Turbo.Plugins.Gigi
     {
         public TopTableCellDecorator DefaultCellDecorator { get; set; }
         public TopTableCellDecorator HighlightCellDecorator { get; set; }
-        public uint SortByLine { get; set; }
+        public uint SortByColumn { get; set; }
         public bool SortDescending { get; set; }
         public float Table2TableXDistance { get; set; }
         public float Table2TableYDistance { get; set; }
@@ -93,7 +93,7 @@ namespace Turbo.Plugins.Gigi
             ShowKilledProgression = true;
             ShowKilledCount = true;
             IncludeProgressionOrbs = true;
-            SortByLine = 4;
+            SortByColumn = 4;
             SortDescending = true;
             //Spacing
             Table2TableXDistance = 0.18f;
@@ -199,8 +199,7 @@ namespace Turbo.Plugins.Gigi
             if (Tables != null){
                 foreach(var t in Tables){
                     if (t != null){
-                        t.Columns.Clear();
-                        t.Lines.Clear();
+                        t.RemoveLines();
                     }
                 }
                 Tables.Clear();
@@ -405,7 +404,7 @@ namespace Turbo.Plugins.Gigi
                     );
                 }//foreach-end monster 
                 //sort and add table
-                t.SortLines((int)SortByLine, SortDescending);
+                t.SortLines((int)SortByColumn, SortDescending);
                 Tables.Add(t);
                 //counters and offsets
                 maxLineCount = (t.Lines.Count > maxLineCount) ? t.Lines.Count : maxLineCount;
