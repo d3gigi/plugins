@@ -13,8 +13,11 @@ namespace Turbo.Plugins.Gigi
         public WorldDecoratorCollection DebugDecorator { get; set; }
         public bool Debug { get; set; }
         private float SizeMultiplier { get; set; }
+        private float PortraitSizeMultiplier { get; set; }
         public float Opacity { get; set; }
         public float PositionOffset { get; set; }
+        public float PortraitOffset { get; set; }
+        public bool OthersAlwaysNextToPortrait { get; set; }
         private BuffRuleFactory buffRuleFactory;
 		
         public PartyBuffPlugin()
@@ -35,8 +38,11 @@ namespace Turbo.Plugins.Gigi
             base.Load(hud);
             buffRuleFactory = new BuffRuleFactory(hud);
             SizeMultiplier = 0.85f;
+            PortraitSizeMultiplier = 0.75f;
             PositionOffset = 0.085f;
+            PortraitOffset = 0.2f;
             Debug = false;
+            OthersAlwaysNextToPortrait = false;
             Opacity = 0.85f;
             RuleCalculatorMe = new BuffRuleCalculator(Hud);
             RuleCalculatorMe.SizeMultiplier = SizeMultiplier;
@@ -80,7 +86,9 @@ namespace Turbo.Plugins.Gigi
                             RuleCalculatorMe.StandardIconSpacing
                         );
                 }else{
-                    if (p.IsOnScreen && p.CoordinateKnown){
+                    if (!p.CoordinateKnown) continue;
+                    if (p.IsOnScreen && !OthersAlwaysNextToPortrait){
+                        RuleCalculators[p.HeroClassDefinition.HeroClass].SizeMultiplier = SizeMultiplier;            
                         RuleCalculators[p.HeroClassDefinition.HeroClass].CalculatePaintInfo(p);
                         if (RuleCalculators[p.HeroClassDefinition.HeroClass].PaintInfoList.Count != 0){
                             BuffPainter.PaintHorizontalCenter(
@@ -92,6 +100,18 @@ namespace Turbo.Plugins.Gigi
                                 RuleCalculators[p.HeroClassDefinition.HeroClass].StandardIconSpacing
                             );
                         }
+                    }else{
+                        RuleCalculators[p.HeroClassDefinition.HeroClass].SizeMultiplier = PortraitSizeMultiplier;
+                        RuleCalculators[p.HeroClassDefinition.HeroClass].CalculatePaintInfo(p);
+                        if (RuleCalculators[p.HeroClassDefinition.HeroClass].PaintInfoList.Count != 0){
+                            BuffPainter.PaintHorizontal(
+                                RuleCalculators[p.HeroClassDefinition.HeroClass].PaintInfoList, 
+                                p.PortraitUiElement.Rectangle.Right, 
+                                p.PortraitUiElement.Rectangle.Top + p.PortraitUiElement.Rectangle.Height * PortraitOffset, 
+                                RuleCalculators[p.HeroClassDefinition.HeroClass].StandardIconSize, 
+                                0
+                            );
+                        }           
                     }
                 }
 
