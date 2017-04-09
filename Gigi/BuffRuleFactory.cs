@@ -1133,7 +1133,15 @@ namespace Turbo.Plugins.Gigi // Credits to Jack
 			if (pwr == Hud.Sno.SnoPowers.ChilaniksChain.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.Cindercoat.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.CoilsOfTheFirstSpider.Sno){} 
-			if (pwr == Hud.Sno.SnoPowers.ConventionOfElements.Sno){} 
+			if (pwr == Hud.Sno.SnoPowers.ConventionOfElements.Sno){
+                yield return new BuffRule(pwr) { IconIndex = 1, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Arcane
+                yield return new BuffRule(pwr) { IconIndex = 2, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Cold
+                yield return new BuffRule(pwr) { IconIndex = 3, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Fire
+                yield return new BuffRule(pwr) { IconIndex = 4, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Holy
+                yield return new BuffRule(pwr) { IconIndex = 5, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Lightning
+                yield return new BuffRule(pwr) { IconIndex = 6, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Physical
+                yield return new BuffRule(pwr) { IconIndex = 7, MinimumIconCount = 1, ShowTimeLeft = true, ShowStacks = false}; // Poison
+            } 
 			if (pwr == Hud.Sno.SnoPowers.CordOfTheSherma.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.CorruptedAshbringer.Sno){} 
 			if (pwr == Hud.Sno.SnoPowers.CountessJuliasCameo.Sno){} 
