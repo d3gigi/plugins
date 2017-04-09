@@ -73,9 +73,9 @@ namespace Turbo.Plugins.Gigi
                     if (RuleCalculatorMe.PaintInfoList.Count != 0)
                         BuffPainter.PaintHorizontalCenter(
                             RuleCalculatorMe.PaintInfoList,
-                            p.ScreenCoordinate.X, 
+                            0, 
                             p.ScreenCoordinate.Y + Hud.Window.Size.Height * PositionOffset,
-                            0,
+                            Hud.Window.Size.Width,
                             RuleCalculatorMe.StandardIconSize,
                             RuleCalculatorMe.StandardIconSpacing
                         );
